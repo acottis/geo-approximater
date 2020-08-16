@@ -27,10 +27,6 @@ app.get('/api/geoid', async (req, res) => {
     }
 })
 
-//exports.app = functions.https.onRequest(app)
-
-exports.app = functions
-    .region('europe-west2')
-    .https.onRequest(app);
+exports.app = functions.https.onRequest(app);
 
 
