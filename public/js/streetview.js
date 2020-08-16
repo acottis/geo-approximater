@@ -50,43 +50,55 @@ async function getCoords() {
 
 const getStreetView = async (lat, lng) => {
 
-  const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyAah7uvsVLhk3A0aHbtKl4IocqE5DV4Zq8`)
-  let data = await response.json()
+  try {
+    const params = new URLSearchParams({
+      lat: lat,
+      lng: lng
+    })
+    const response = await fetch(`/api/geoid?${params}`)
+    let data = await response.json()
 
-  console.log(data)
-  //console.log(data.status)
+    console.log(data)
 
-  const result_count = Object.keys(data.results).length
+    //console.log(data.status)
 
-  console.log(result_count)
-  //Filter out bad results
-  if (data.status === "ZERO_RESULTS") {
-    console.log("Zero results so trying again...")
-    getCoords()
+    const result_count = Object.keys(data.results).length
+
+    console.log(result_count)
+    //Filter out bad results
+    if (data.status === "ZERO_RESULTS") {
+      console.log("Zero results so trying again...")
+      getCoords()
+    }
+    // if (result_count === 0){
+    //   console.log("Zero results so trying again...")
+    //   getCoords()
+    //   return
+    // }
+    if (data.results[0].geometry.location_type === "APPROXIMATE") {
+      console.log("Result is a large mass so trying again...")
+      getCoords()
+      return
+    }
+    // else if (OCEANS.includes(data.results[0].place_id)) {
+    //   console.log("This is an ocean so trying again...")
+    //   getCoords()
+    //   return
+    // }
+    // else if (result_count === 2 && OCEANS.includes(data.results[1].place_id)) {
+    //   console.log("This is an ocean[1] so trying again...")
+    //   getCoords()
+    //   return
+    // }
+    else {
+      // call the function with the vetted coords
+      getStreet(new google.maps.LatLng(lat, lng))
+    }
   }
-  // if (result_count === 0){
-  //   console.log("Zero results so trying again...")
-  //   getCoords()
-  //   return
-  // }
-  if (data.results[0].geometry.location_type === "APPROXIMATE"){
-    console.log("Result is a large mass so trying again...")
-    getCoords()
+  catch (error) {
+    document.getElementById('pano').innerText = error;
+    console.log(error)
     return
-  }
-  // else if (OCEANS.includes(data.results[0].place_id)) {
-  //   console.log("This is an ocean so trying again...")
-  //   getCoords()
-  //   return
-  // }
-  // else if (result_count === 2 && OCEANS.includes(data.results[1].place_id)) {
-  //   console.log("This is an ocean[1] so trying again...")
-  //   getCoords()
-  //   return
-  // }
-  else {
-    // call the function with the vetted coords
-    getStreet(new google.maps.LatLng(lat, lng))
   }
 }
 

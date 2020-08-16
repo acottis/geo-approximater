@@ -23,20 +23,30 @@ a[rel=noopener] {
   width : 100%;
 }
 
+#btn_start,
 #btn_guess {
   z-index: 10;
   position: absolute;
-  bottom: 5%;
-  left: 50%;
   /* transform: translate(-50%, -50%); */
   background-color: #555;
   color: white;
   font-size: 16px;
-  padding: 12px 24px;
+  padding: 16px 32px;
   border: none;
   cursor: pointer;
   border-radius: 5px;
 }
+
+#btn_guess{
+  bottom: 5%;
+  left: 50%;
+}
+
+#btn_start{
+  bottom: 95%;
+  left: 50%;
+}
+
 
 #btn_guess:hover{
   background-color: orange;

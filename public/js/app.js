@@ -1,8 +1,12 @@
 
 const btn_guess = document.getElementById("btn_guess")
 
+const btn_start = document.getElementById("btn_start")
+
 // Entry point to get a StreetView
-getCoords()
+btn_start.addEventListener("click", () =>{
+    getCoords()
+})
 
 btn_guess.addEventListener("click", (e) => {
     console.log("lat diff: ", streetView_lat - guess_lat)
