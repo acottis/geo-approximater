@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/acottis/geo-approximater/issues"
   },
-  "homepage": "https://github.com/acottis/geo-approximater#readme"
+  "homepage": "https://github.com/acottis/geo-approximater#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
 }
